@@ -14,6 +14,14 @@ renamed as (
         telefono,
         email
     from source
+),                   
+
+deduplicado as (
+    select *,
+        ROW_NUMBER() OVER (PARTITION BY email ORDER BY id_cliente) as rn
+    from renamed
 )
 
-select * from renamed
+select * exclude (rn)
+from deduplicado
+where rn = 1
