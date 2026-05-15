@@ -1,0 +1,166 @@
+version: 2
+models: 
+  - name: stg_clientes
+    description: "Tabla de clientes limpia desde Bronze"
+    columns:
+      - name: id_cliente
+        description: "Identificador único del cliente"
+        tests:
+          - unique
+          - not_null
+      - name: nombre
+        description: "Nombre del cliente"
+        tests:
+          - not_null
+      - name: apellido
+        description: "Apellido del cliente"
+        tests:
+          - not_null
+      - name: email
+        description: "Email del cliente"
+        tests:
+          - unique
+          - not_null
+      - name: ciudad
+        description: "Ciudad del cliente"
+      - name: tipo_cliente
+        description: "Tipo de cliente"
+
+  - name: stg_editorial
+    description: "Tabla de editoriales limpia desde Bronze"
+    columns:
+      - name: id_editorial
+        tests:
+          - unique
+          - not_null
+      - name: nombre
+        tests:
+          - not_null
+      - name: pais
+        tests:
+          - not_null
+      - name: ciudad
+        tests:
+          - not_null
+      - name: tipo_editorial
+        tests:
+          - not_null
+      - name: especialidad
+      - name: email
+      - name: telefono
+      - name: contacto
+
+  - name: stg_fecha
+    description: "Tabla de fechas limpia desde Bronze"
+    columns:
+      - name: id_fecha
+        tests:
+          - unique
+          - not_null
+      - name: fecha_completa
+        tests:
+          - not_null
+      - name: anyo
+        tests:
+          - not_null
+      - name: mes
+        tests:
+          - not_null
+      - name: dia
+        tests:
+          - not_null
+
+  - name: stg_librerias
+    description: "Tabla de librerías limpia desde Bronze"
+    columns:
+      - name: id_libreria
+        tests:
+          - unique
+          - not_null
+      - name: nombre_libreria
+        tests:
+          - not_null
+      - name: ciudad
+        tests:
+          - not_null
+      - name: direccion
+      - name: telefono
+      - name: email
+      - name: fecha_apertura
+
+  - name: stg_libros
+    description: "Tabla de libros limpia desde Bronze"
+    columns:
+      - name: id_libro
+        tests:
+          - unique
+          - not_null
+      - name: id_editorial
+        tests:
+          - not_null
+      - name: titulo
+        tests:
+          - not_null
+      - name: autor
+        tests:
+          - not_null
+      - name: categoria
+      - name: precio
+        tests:
+          - not_null
+
+  - name: stg_stock
+    description: "Tabla de stock limpia desde Bronze"
+    columns:
+      - name: id_stock
+        tests:
+          - unique
+          - not_null
+      - name: id_libro
+        tests:
+          - not_null
+      - name: stock_inicial
+        tests:
+          - not_null
+      - name: unidades_vendidas
+        tests:
+          - not_null
+      - name: stock_actual
+        tests:
+          - not_null
+      - name: fecha_actualizacion
+
+  - name: stg_ventas
+    description: "Tabla de ventas limpia desde Bronze"
+    columns:
+      - name: id_detalle
+        tests:
+          - unique
+          - not_null
+      - name: id_venta
+        tests:
+          - not_null
+      - name: id_cliente
+        tests:
+          - not_null
+      - name: id_libro
+        tests:
+          - not_null
+      - name: id_libreria
+        tests:
+          - not_null
+      - name: id_fecha
+        tests:
+          - not_null
+      - name: fecha
+        tests:
+          - not_null
+      - name: cantidad
+        tests:
+          - not_null
+      - name: precio_unitario
+        tests:
+          - not_null
+      - name: total_venta
+        tests:
+          - not_null

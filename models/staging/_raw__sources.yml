@@ -1,0 +1,15 @@
+version: 2
+
+sources:
+  - name: libreria
+    description: "Datos crudos de la libreria Bronze"
+    database: DEV_PROYECTO_BRONZE
+    schema: LIBRERIA
+    tables:
+      - name: clientes
+      - name: editorial
+      - name: fecha
+      - name: librerias
+      - name: libros
+      - name: stock
+      - name: ventas
