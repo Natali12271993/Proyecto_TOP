@@ -24,7 +24,16 @@ models:
       - name: ciudad
         description: "Ciudad del cliente"
       - name: tipo_cliente
-        description: "Tipo de cliente"
+        description: "Tipo de cliente normalizado a minúsculas"
+        tests:
+          - accepted_values:
+              values: ['mugle', 'puro_sangre', 'semimagico', 'mestizo', 'mugle_magico']
+      - name: especie
+        description: "Especie del cliente normalizada a minúsculas"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['mugle', 'mago', 'elfo', 'fantasma', 'centauro', 'duende', 'gigante', 'trol']
 
   - name: stg_editorial
     description: "Tabla de editoriales limpia desde Bronze"
@@ -85,6 +94,7 @@ models:
           - not_null
       - name: direccion
       - name: telefono
+        description: "NULL si el valor original no es numérico"
       - name: email
       - name: fecha_apertura
 
@@ -98,6 +108,9 @@ models:
       - name: id_editorial
         tests:
           - not_null
+          - relationships:
+              to: ref('stg_editorial')
+              field: id_editorial
       - name: titulo
         tests:
           - not_null
@@ -105,6 +118,7 @@ models:
         tests:
           - not_null
       - name: categoria
+        description: "Normalizada a minúsculas. sin_categoria si era null."
       - name: precio
         tests:
           - not_null
@@ -119,6 +133,9 @@ models:
       - name: id_libro
         tests:
           - not_null
+          - relationships:
+              to: ref('stg_libros')
+              field: id_libro
       - name: stock_inicial
         tests:
           - not_null
@@ -129,6 +146,12 @@ models:
         tests:
           - not_null
       - name: fecha_actualizacion
+      - name: necesita_reposicion
+        description: "TRUE si stock_actual < 5"
+        tests:
+          - not_null
+          - accepted_values:
+              values: [true, false]
 
   - name: stg_ventas
     description: "Tabla de ventas limpia desde Bronze"
@@ -143,15 +166,27 @@ models:
       - name: id_cliente
         tests:
           - not_null
+          - relationships:
+              to: ref('stg_clientes')
+              field: id_cliente
       - name: id_libro
         tests:
           - not_null
+          - relationships:
+              to: ref('stg_libros')
+              field: id_libro
       - name: id_libreria
         tests:
           - not_null
+          - relationships:
+              to: ref('stg_librerias')
+              field: id_libreria
       - name: id_fecha
         tests:
           - not_null
+          - relationships:
+              to: ref('stg_fecha')
+              field: id_fecha
       - name: fecha
         tests:
           - not_null
