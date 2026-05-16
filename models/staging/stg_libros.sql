@@ -11,10 +11,8 @@ renamed as (
         LOWER(categoria)        as categoria,
         precio::FLOAT           as precio
     from source
-    where id_libro is not null
-      and precio is not null
-      and autor is not null
-      and id_editorial is not null
+    where id_libro is not null -- solo este filtro, quitamos precio/autor(añadimos editorial, ya que nos han entrado los libros sin editorial. Not null en editorial les detecta)
+      and id_editorial  is not null
 ),
 
 deduplicado as (

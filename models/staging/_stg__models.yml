@@ -1,5 +1,6 @@
 version: 2
-models: 
+models:
+
   - name: stg_clientes
     description: "Tabla de clientes limpia desde Bronze"
     columns:
@@ -9,27 +10,21 @@ models:
           - unique
           - not_null
       - name: nombre
-        description: "Nombre del cliente"
         tests:
           - not_null
       - name: apellido
-        description: "Apellido del cliente"
         tests:
           - not_null
       - name: email
-        description: "Email del cliente"
         tests:
           - unique
           - not_null
       - name: ciudad
-        description: "Ciudad del cliente"
       - name: tipo_cliente
-        description: "Tipo de cliente normalizado a minúsculas"
         tests:
           - accepted_values:
               values: ['mugle', 'puro_sangre', 'semimagico', 'mestizo', 'mugle_magico']
       - name: especie
-        description: "Especie del cliente normalizada a minúsculas"
         tests:
           - not_null
           - accepted_values:
@@ -115,13 +110,9 @@ models:
         tests:
           - not_null
       - name: autor
-        tests:
-          - not_null
       - name: categoria
         description: "Normalizada a minúsculas. sin_categoria si era null."
       - name: precio
-        tests:
-          - not_null
 
   - name: stg_stock
     description: "Tabla de stock limpia desde Bronze"

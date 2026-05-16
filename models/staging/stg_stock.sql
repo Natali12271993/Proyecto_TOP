@@ -5,11 +5,15 @@ with source as (
 renamed as (
     select
         id_stock,
-        id_libro,
+        UPPER (id_libro)  as id_libro,
         stock_inicial,
         unidades_vendidas,
         stock_actual,
-        fecha_actualizacion
+        fecha_actualizacion,
+        CASE
+            WHEN stock_actual < 5 THEN true
+            ELSE false
+        END                             as necesita_reposicion
     from source
 )
 
