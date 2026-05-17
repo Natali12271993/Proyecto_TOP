@@ -6,7 +6,7 @@
     )
 }}
 
-with ventas as (
+with venta as (
     select * from {{ ref('stg_venta') }}
 
     {% if is_incremental() %}
@@ -56,7 +56,7 @@ select
     df.anyo,
     df.mes
 
-from ventas v
+from venta v
 left join dim_cliente  dc  on v.id_cliente  = dc.id_cliente
 left join dim_libro    dl  on v.id_libro    = dl.id_libro
 left join dim_libreria dlb on v.id_libreria = dlb.id_libreria
