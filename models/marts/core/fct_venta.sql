@@ -46,10 +46,9 @@ select
     v.fecha,
     dlb.id_libreria,
     dlb.nombre_libreria,
-    dlb.ciudad                  as ciudad_libreria,
+    dlb.ciudad              as ciudad_libreria,
     dl.id_libro,
-    dl.titulo,
-    dl.categoria,
+    dl.titulo,              -- sin categoria
     dc.id_cliente,
     dc.especie,
     dc.tipo_cliente,
