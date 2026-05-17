@@ -39,5 +39,7 @@ models:
   Proyecto_top:
     staging:
       +materialized: view
+      +schema: DEV_PROYECTO_SILVER
     marts:
       +materialized: table
+      +schema: DEV_PROYECTO_GOLD
