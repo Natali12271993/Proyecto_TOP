@@ -5,7 +5,7 @@ with source as (
 renamed as (
     select
         id_stock,
-        UPPER (id_libro)  as id_libro,
+        UPPER (id_libro)               as id_libro,
         stock_inicial,
         unidades_vendidas,
         stock_actual,
