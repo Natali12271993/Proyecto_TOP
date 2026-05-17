@@ -1,13 +1,12 @@
-with librerias as (
+{{config(materialized='table')}}
+
+with libreria as (
     select * from {{ ref('stg_libreria') }}
 )
 
 select
+    {{ dbt_utils.generate_surrogate_key(['id_libreria']) }} as sk_libreria,
     id_libreria,
     nombre_libreria,
-    ciudad,
-    direccion,
-    telefono,
-    email,
-    fecha_apertura
-from librerias
+    ciudad
+from libreria
