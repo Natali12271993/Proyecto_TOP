@@ -1,4 +1,4 @@
-{{config(materialized='table')}}
+{{ config(materialized='table') }}
 
 with libreria as (
     select * from {{ ref('stg_libreria') }}
