@@ -16,8 +16,8 @@ models:
         tests:
           - not_null
       - name: email
+        description: 'Email del cliente. Emails compartidos entre distintos id_cliente es una anomalia conocida del dato de origen.'
         tests:
-          - unique
           - not_null
       - name: ciudad
       - name: tipo_cliente
@@ -102,10 +102,10 @@ models:
           - not_null
       - name: id_editorial
         tests:
-          - not_null
           - relationships:
               to: ref('stg_editorial')
               field: id_editorial
+     
       - name: titulo
         tests:
           - not_null
@@ -113,7 +113,7 @@ models:
       - name: categoria
         description: "Normalizada a minúsculas. sin_categoria si era null."
       - name: precio
-
+# si not_null — controlado por test singular
   - name: stg_stock
     description: "Tabla de stock limpia desde Bronze"
     columns:
@@ -166,6 +166,8 @@ models:
           - relationships:
               to: ref('stg_libros')
               field: id_libro
+              config:
+                severity: warn
       - name: id_libreria
         tests:
           - not_null

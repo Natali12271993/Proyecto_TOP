@@ -7,18 +7,19 @@ renamed as (
         id_cliente,
         nombre,
         apellido,
-        tipo_cliente,
-        especie,
+        LOWER(TRIM(tipo_cliente))   as tipo_cliente,
+        LOWER(TRIM(especie))        as especie,
         ciudad,
         direccion,
         telefono,
         email
     from source
-),                   
+    where id_cliente is not null
+),
 
 deduplicado as (
     select *,
-        ROW_NUMBER() OVER (PARTITION BY email ORDER BY id_cliente) as rn
+        ROW_NUMBER() OVER (PARTITION BY id_cliente ORDER BY id_cliente) as rn
     from renamed
 )
 
