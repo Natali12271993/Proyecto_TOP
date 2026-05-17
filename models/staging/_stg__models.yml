@@ -1,7 +1,7 @@
 version: 2
 models:
 
-  - name: stg_clientes
+  - name: stg_cliente
     description: "Tabla de clientes limpia desde Bronze"
     columns:
       - name: id_cliente
@@ -74,7 +74,7 @@ models:
         tests:
           - not_null
 
-  - name: stg_librerias
+  - name: stg_libreria
     description: "Tabla de librerías limpia desde Bronze"
     columns:
       - name: id_libreria
@@ -93,7 +93,7 @@ models:
       - name: email
       - name: fecha_apertura
 
-  - name: stg_libros
+  - name: stg_libro
     description: "Tabla de libros limpia desde Bronze"
     columns:
       - name: id_libro
@@ -105,7 +105,6 @@ models:
           - relationships:
               to: ref('stg_editorial')
               field: id_editorial
-     
       - name: titulo
         tests:
           - not_null
@@ -113,7 +112,8 @@ models:
       - name: categoria
         description: "Normalizada a minúsculas. sin_categoria si era null."
       - name: precio
-# si not_null — controlado por test singular
+        # not_null controlado por test singular
+
   - name: stg_stock
     description: "Tabla de stock limpia desde Bronze"
     columns:
@@ -124,8 +124,7 @@ models:
       - name: id_libro
         tests:
           - not_null
-          # relationships cubierto por test singular
-          # tests/libros_sin_editorial.sql
+          # relationships cubierto por test singular: tests/libros_sin_editorial.sql
       - name: stock_inicial
         tests:
           - not_null
@@ -143,7 +142,7 @@ models:
           - accepted_values:
               values: [true, false]
 
-  - name: stg_ventas
+  - name: stg_venta
     description: "Tabla de ventas limpia desde Bronze"
     columns:
       - name: id_detalle
@@ -157,13 +156,13 @@ models:
         tests:
           - not_null
           - relationships:
-              to: ref('stg_clientes')
+              to: ref('stg_cliente')
               field: id_cliente
       - name: id_libro
         tests:
           - not_null
           - relationships:
-              to: ref('stg_libros')
+              to: ref('stg_libro')
               field: id_libro
               config:
                 severity: warn
@@ -171,7 +170,7 @@ models:
         tests:
           - not_null
           - relationships:
-              to: ref('stg_librerias')
+              to: ref('stg_libreria')
               field: id_libreria
       - name: id_fecha
         tests:

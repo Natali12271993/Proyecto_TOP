@@ -1,5 +1,5 @@
 with librerias as (
-    select * from {{ ref('stg_librerias') }}
+    select * from {{ ref('stg_libreria') }}
 )
 
 select

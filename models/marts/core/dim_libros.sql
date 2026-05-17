@@ -1,5 +1,5 @@
 with libros as (
-    select * from {{ ref('stg_libros') }}
+    select * from {{ ref('stg_libro') }}
 ),
 
 editorial as (
