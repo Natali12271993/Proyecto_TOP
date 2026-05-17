@@ -20,7 +20,7 @@ dim_cliente as (
 ),
 
 dim_libro as (
-    select sk_libro, id_libro, titulo, categoria
+    select sk_libro, id_libro, titulo
     from {{ ref('dim_libro') }}
 ),
 
