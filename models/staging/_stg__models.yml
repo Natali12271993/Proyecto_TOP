@@ -124,9 +124,8 @@ models:
       - name: id_libro
         tests:
           - not_null
-          - relationships:
-              to: ref('stg_libros')
-              field: id_libro
+          # relationships cubierto por test singular
+          # tests/libros_sin_editorial.sql
       - name: stock_inicial
         tests:
           - not_null
