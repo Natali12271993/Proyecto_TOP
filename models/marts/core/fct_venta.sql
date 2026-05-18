@@ -15,22 +15,22 @@ with venta as (
 ),
 
 dim_cliente as (
-    select sk_cliente, id_cliente, especie, tipo_cliente
+    select sk_cliente, id_cliente
     from {{ ref('dim_cliente') }}
 ),
 
 dim_libro as (
-    select sk_libro, id_libro, titulo
+    select sk_libro, id_libro,
     from {{ ref('dim_libro') }}
 ),
 
 dim_libreria as (
-    select sk_libreria, id_libreria, nombre_libreria, ciudad
+    select sk_libreria, id_libreria,
     from {{ ref('dim_libreria') }}
 ),
 
 dim_fecha as (
-    select sk_fecha, id_fecha, anyo, mes
+    select sk_fecha, id_fecha,
     from {{ ref('dim_fecha') }}
 )
 
