@@ -13,7 +13,6 @@
 select
     id_stock,
     id_libro,
-    id_libreria,
     stock_inicial,
     unidades_vendidas,
     stock_actual,
