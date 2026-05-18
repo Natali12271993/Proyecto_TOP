@@ -39,10 +39,14 @@ models:
   Proyecto_top:
     staging:
       +materialized: view
-      #sin +schema - usa dbt_nchernysheva de credentials
+      +database: DEV_PROYECTO_SILVER
+      +schema: STAGING
     marts:
       +materialized: table
       +database: DEV_PROYECTO_GOLD
       +schema: CORE
 
-      
+#snapshots
+
+
+#seeds
