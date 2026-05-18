@@ -32,3 +32,8 @@ snapshots:
   Proyecto_top:
     +target_database: DEV_PROYECTO_GOLD
     +target_schema: SNAPSHOTS
+
+seeds:
+  Proyecto_top:
+    +database: DEV_PROYECTO_BRONZE
+    +schema: SEEDS
