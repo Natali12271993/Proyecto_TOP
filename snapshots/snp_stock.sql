@@ -3,7 +3,7 @@
 {{
     config(
         target_schema='SNAPSHOTS',
-        target_database='DEV_PROYECTO_BRONZE',
+        target_database='DEV_PROYECTO_GOLD',
         unique_key='id_stock',
         strategy='check',
         check_cols=['stock_actual', 'unidades_vendidas']
