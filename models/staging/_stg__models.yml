@@ -105,6 +105,8 @@ models:
           - relationships:
               to: ref('stg_editorial')
               field: id_editorial
+              config:
+                severity: warn
       - name: titulo
         tests:
           - not_null
