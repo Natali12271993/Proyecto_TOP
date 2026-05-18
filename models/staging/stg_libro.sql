@@ -4,15 +4,14 @@ with source as (
 
 renamed as (
     select
-        UPPER(id_libro)         as id_libro,
-        UPPER(id_editorial)     as id_editorial,
-        INITCAP(titulo)         as titulo,
-        INITCAP(autor)          as autor,
-        LOWER(categoria)        as categoria,
-        precio::FLOAT           as precio
+        UPPER(id_libro)                                         as id_libro,
+        COALESCE(UPPER(id_editorial), 'SIN_EDITORIAL')          as id_editorial,
+        INITCAP(titulo)                                         as titulo,
+        INITCAP(autor)                                          as autor,
+        COALESCE(LOWER(TRIM(categoria)), 'sin_categoria')       as categoria,
+        precio::FLOAT                                           as precio
     from source
-    where id_libro is not null -- solo este filtro, quitamos precio/autor
-    COALESCE(UPPER(id_editorial), 'SIN_EDITORIAL') as id_editorial
+    where id_libro is not null
 ),
 
 deduplicado as (
