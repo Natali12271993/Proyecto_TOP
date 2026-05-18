@@ -1,0 +1,106 @@
+version: 2
+
+models:
+
+  - name: dim_cliente
+    description: "Dimensión cliente con especie y tipo para análisis por segmento."
+    columns:
+      - name: sk_cliente
+        description: "Surrogate key generada con dbt_utils."
+        tests:
+          - unique
+          - not_null
+      - name: id_cliente
+        tests:
+          - unique
+          - not_null
+      - name: especie
+        tests:
+          - not_null
+          - accepted_values:
+             values: ['mugle', 'mago', 'elfo', 'fantasma', 'centauro', 'duende', 'gigante', 'trol']
+      - name: tipo_cliente
+        tests:
+          - accepted_values:
+              values: ['mugle', 'puro_sangre', 'semimagico', 'mestizo', 'mugle_magico']
+
+  - name: dim_libro
+    description: "Dimensión libro con titulo y autor."
+    columns:
+      - name: sk_libro
+        tests:
+          - unique
+          - not_null
+      - name: id_libro
+        tests:
+          - unique
+          - not_null
+      - name: titulo
+        tests:
+          - not_null
+
+  - name: dim_libreria
+    description: "Las librerías mágicas."
+    columns:
+      - name: sk_libreria
+        tests:
+          - unique
+          - not_null
+      - name: id_libreria
+        tests:
+          - unique
+          - not_null
+      - name: nombre_libreria
+        tests:
+          - not_null
+
+  - name: dim_fecha
+    description: "Dimensión fecha para análisis temporal."
+    columns:
+      - name: sk_fecha
+        tests:
+          - unique
+          - not_null
+      - name: id_fecha
+        tests:
+          - unique
+          - not_null
+
+  - name: fct_venta
+    description: "Tabla de hechos de ventas incremental. Cubre 4 casos de uso."
+    columns:
+      - name: id_detalle
+        description: "PK natural de la línea de venta."
+        tests:
+          - unique
+          - not_null
+      - name: sk_cliente
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_cliente')
+              field: sk_cliente
+      - name: sk_libro
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_libro')
+              field: sk_libro
+      - name: sk_libreria
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_libreria')
+              field: sk_libreria
+      - name: sk_fecha
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_fecha')
+              field: sk_fecha
+      - name: total_venta
+        tests:
+          - not_null
+      - name: cantidad
+        tests:
+          - not_null
