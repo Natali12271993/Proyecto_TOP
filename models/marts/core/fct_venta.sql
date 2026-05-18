@@ -20,17 +20,17 @@ dim_cliente as (
 ),
 
 dim_libro as (
-    select sk_libro, id_libro,
+    select sk_libro, id_libro
     from {{ ref('dim_libro') }}
 ),
 
 dim_libreria as (
-    select sk_libreria, id_libreria,
+    select sk_libreria, id_libreria
     from {{ ref('dim_libreria') }}
 ),
 
 dim_fecha as (
-    select sk_fecha, id_fecha,
+    select sk_fecha, id_fecha, fecha_venta
     from {{ ref('dim_fecha') }}
 )
 
@@ -45,15 +45,9 @@ select
     v.total_venta,
     v.fecha,
     dlb.id_libreria,
-    dlb.nombre_libreria,
-    dlb.ciudad              as ciudad_libreria,
     dl.id_libro,
-    dl.titulo,              -- sin categoria
     dc.id_cliente,
-    dc.especie,
-    dc.tipo_cliente,
-    df.anyo,
-    df.mes
+    df.fecha_venta
 
 from venta v
 left join dim_cliente  dc  on v.id_cliente  = dc.id_cliente
