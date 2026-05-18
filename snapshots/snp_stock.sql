@@ -3,10 +3,10 @@
 {{
     config(
         target_schema='SNAPSHOTS',
-        target_database='DEV_PROYECTO_GOLD',
+        target_database='DEV_PROYECTO_BRONZE',
         unique_key='id_stock',
         strategy='check',
-        check_cols=['stock_actual']
+        check_cols=['stock_actual', 'unidades_vendidas']
     )
 }}
 
