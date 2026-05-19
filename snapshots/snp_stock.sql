@@ -6,8 +6,8 @@
         target_schema='STAGING',
         unique_key='id_stock',
         strategy='check',
-        check_cols=['stock_actual', 'unidades_vendidas']
-        updated_at = 'current_timestamp'
+        check_cols=['stock_actual', 'unidades_vendidas', 'fecha_actualizacion']
+       
     )
 }}
 

@@ -11,7 +11,7 @@ renamed as (
         stock_actual,
         fecha_actualizacion,
         CASE
-            WHEN stock_actual < 5 THEN true
+            WHEN stock_actual <= 10 THEN true
             ELSE false
         END                             as necesita_reposicion
     from source

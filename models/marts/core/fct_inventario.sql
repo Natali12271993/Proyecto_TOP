@@ -38,4 +38,4 @@ select
 from stock s
 left join dim_libro     dl on s.id_libro      = dl.id_libro
 left join dim_editorial de on dl.id_editorial = de.id_editorial
-where s.stock_actual < 5
+where s.stock_actual <= 10
