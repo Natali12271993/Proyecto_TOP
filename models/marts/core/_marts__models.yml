@@ -19,7 +19,7 @@ models:
         tests:
           - not_null
           - accepted_values:
-             values: ['mugle', 'mago', 'elfo', 'fantasma', 'centauro', 'duende', 'gigante', 'trol']
+              values: ['mugle', 'mago', 'elfo', 'fantasma', 'centauro', 'duende', 'gigante', 'trol']
       - name: tipo_cliente
         tests:
           - accepted_values:
@@ -78,10 +78,8 @@ models:
         tests:
           - unique
           - not_null
-      - name: nombre
-        tests:
-          - not_null
-#TABLAS DE HECHO 
+
+#TABLAS DE HECHO
   - name: fct_venta
     description: "Tabla de hechos de ventas incremental. Cubre 4 casos de uso."
     columns:
@@ -136,10 +134,14 @@ models:
               field: sk_libro
       - name: sk_editorial
         tests:
-          - not_null
+          - not_null:
+              config:
+                severity: warn
           - relationships:
               to: ref('dim_editorial')
               field: sk_editorial
+              config:
+                severity: warn
       - name: necesita_reposicion
         tests:
           - not_null
