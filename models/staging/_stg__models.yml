@@ -15,8 +15,12 @@ models:
       - name: apellido
         tests:
           - not_null
+          # Email puede repetirse entre clientes distintos (misma familia/amigos)
+      # Lo que no puede ocurrir es que un mismo id_cliente tenga dos emails
       - name: email
-        description: 'Email del cliente. Emails compartidos entre distintos id_cliente es una anomalia conocida del dato de origen.'
+        description: >
+          Email del cliente. Puede ser compartido entre distintos id_cliente.
+          Un mismo id_cliente nunca tendrá dos emails distintos.
         tests:
           - not_null
       - name: ciudad
