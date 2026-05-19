@@ -3,7 +3,7 @@ version: 2
 models:
 
   - name: dim_cliente
-    description: "Dimensión cliente con especie y tipo para análisis por segmento."
+    description: "Dimensión cliente con especie y tipo del cliente para análisis por segmento."
     columns:
       - name: sk_cliente
         description: "Surrogate key generada con dbt_utils."

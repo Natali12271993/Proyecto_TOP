@@ -11,6 +11,7 @@ editorial as (
 select
     {{ dbt_utils.generate_surrogate_key(['l.id_libro']) }} as sk_libro,
     l.id_libro,
+    l.id_editorial,
     l.titulo,
     l.autor,
     l.precio
