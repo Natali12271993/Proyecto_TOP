@@ -1,12 +1,13 @@
-{% snapshot snp_stock %}
+{% snapshot snap_stock %}
 
 {{
     config(
-        target_schema='SNAPSHOTS',
-        target_database='DEV_PROYECTO_GOLD',
+        target_database='DEV_PROYECTO_SILVER',
+        target_schema='STAGING',
         unique_key='id_stock',
         strategy='check',
         check_cols=['stock_actual', 'unidades_vendidas']
+        updated_at = 'current_timestamp'
     )
 }}
 
@@ -17,6 +18,6 @@ select
     unidades_vendidas,
     stock_actual,
     fecha_actualizacion
-from {{ source('libreria', 'stock') }}
+from {{ ref('stg_stock') }}
 
 {% endsnapshot %}
