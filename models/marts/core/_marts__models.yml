@@ -1,5 +1,6 @@
 version: 2
 
+#DIMENSIONES
 models:
 
   - name: dim_cliente
@@ -66,6 +67,21 @@ models:
           - unique
           - not_null
 
+  - name: dim_editorial
+    description: "Dimensión editorial para contacto directo en reposición."
+    columns:
+      - name: sk_editorial
+        tests:
+          - unique
+          - not_null
+      - name: id_editorial
+        tests:
+          - unique
+          - not_null
+      - name: nombre
+        tests:
+          - not_null
+#TABLAS DE HECHO 
   - name: fct_venta
     description: "Tabla de hechos de ventas incremental. Cubre 4 casos de uso."
     columns:
@@ -104,3 +120,28 @@ models:
       - name: cantidad
         tests:
           - not_null
+
+  - name: fct_inventario
+    description: "Inventario con flag de reposición urgente y editorial de contacto."
+    columns:
+      - name: id_stock
+        tests:
+          - unique
+          - not_null
+      - name: sk_libro
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_libro')
+              field: sk_libro
+      - name: sk_editorial
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_editorial')
+              field: sk_editorial
+      - name: necesita_reposicion
+        tests:
+          - not_null
+          - accepted_values:
+              values: [true, false]
