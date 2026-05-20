@@ -11,5 +11,6 @@ select
     apellido,
     tipo_cliente,
     especie,
-    ciudad
+    ciudad,
+    direccion
 from cliente

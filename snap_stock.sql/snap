@@ -2,12 +2,11 @@
 
 {{
     config(
-        target_database='DEV_PROYECTO_SILVER',
-        target_schema='STAGING',
+        target_database='DEV_PROYECTO_GOLD',
+        target_schema='SNAPSHOTS',
         unique_key='id_stock',
         strategy='check',
-        check_cols=['stock_actual', 'unidades_vendidas', 'fecha_actualizacion']
-       
+        check_cols=['stock_actual', 'unidades_vendidas']
     )
 }}
 
@@ -17,7 +16,8 @@ select
     stock_inicial,
     unidades_vendidas,
     stock_actual,
-    fecha_actualizacion
+    fecha_actualizacion,
+    necesita_reposicion
 from {{ ref('stg_stock') }}
 
 {% endsnapshot %}
