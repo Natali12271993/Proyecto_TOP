@@ -1,10 +1,4 @@
-{{
-    config(
-        materialized='incremental',
-        unique_key='id_stock',
-        incremental_strategy='merge'
-    )
-}}
+{{ config(materialized='table') }}
 
 with stock as (
     select * from {{ ref('stg_stock') }}
