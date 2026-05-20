@@ -10,7 +10,7 @@ with venta as (
     select * from {{ ref('stg_venta') }}
 
     {% if is_incremental() %}
-        where fecha > (select max(fecha) from {{ this }})
+        where fecha >= (select max(fecha) from {{ this }})
     {% endif %}
 ),
 
