@@ -1,15 +1,39 @@
-Welcome to your new dbt project!
+# 📚 Librería Mágica — Proyecto Cívica
 
-### Using the starter project
+Pipeline de Data Engineering end-to-end construido con **dbt + Snowflake**.
 
-Try running the following commands:
-- dbt run
-- dbt test
+## 🏗️ Arquitectura
 
+- **Bronze** — 7 tablas RAW cargadas desde CSV en Snowflake
+- **Silver** — 7 modelos `stg_*` con limpieza, normalización y tests
+- **Gold** — Modelo dimensional con dims y fct_venta incremental
 
-### Resources:
-- Learn more about dbt [in the docs](https://docs.getdbt.com/docs/introduction)
-- Check out [Discourse](https://discourse.getdbt.com/) for commonly asked questions and answers
-- Join the [dbt community](https://getdbt.com/community) to learn from other analytics engineers
-- Find [dbt events](https://events.getdbt.com) near you
-- Check out [the blog](https://blog.getdbt.com/) for the latest news on dbt's development and best practices
+## 🎯 Casos de uso
+
+1. ¿Qué librería genera más ingresos? → `fct_venta + dim_libreria`
+2. ¿Qué libros se venden más? → `fct_venta + dim_libro`
+3. ¿Qué especie de cliente compra más? → `fct_venta + dim_cliente`
+4. ¿En qué mes se vende más? → `fct_venta + dim_fecha`
+
+## 🗂️ Estructura del proyecto
+
+## ⚙️ Cómo ejecutar
+
+```bash
+# Instalar dependencias
+dbt deps
+
+# Ejecutar pipeline completo
+dbt build
+
+# Ejecutar snapshot
+dbt snapshot
+```
+
+## 🗄️ Entornos Snowflake
+
+| Entorno | Bronze | Silver | Gold |
+|---------|--------|--------|------|
+| DEV | DEV_PROYECTO_BRONZE | DEV_PROYECTO_SILVER | DEV_PROYECTO_GOLD |
+| PRE | PRE_PROYECTO_BRONZE | PRE_PROYECTO_SILVER | PRE_PROYECTO_GOLD |
+| PRO | PRO_PROYECTO_BRONZE | PRO_PROYECTO_SILVER | PRO_PROYECTO_GOLD |

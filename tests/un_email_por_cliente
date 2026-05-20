@@ -1,0 +1,10 @@
+-- Valida que cada id_cliente tiene un único email.
+-- Email compartido entre distintos clientes está permitido.
+-- Lo que NO está permitido es que un mismo cliente tenga dos emails distintos.
+
+select
+    id_cliente,
+    count(distinct email) as emails_distintos
+from {{ ref('stg_cliente') }}
+group by id_cliente
+having count(distinct email) > 1

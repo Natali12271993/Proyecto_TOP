@@ -1,0 +1,149 @@
+version: 2
+
+#DIMENSIONES
+models:
+
+  - name: dim_cliente
+    description: "Dimensión cliente con especie y tipo del cliente para análisis por segmento."
+    columns:
+      - name: sk_cliente
+        description: "Surrogate key generada con dbt_utils."
+        tests:
+          - unique
+          - not_null
+      - name: id_cliente
+        tests:
+          - unique
+          - not_null
+      - name: especie
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['mugle', 'mago', 'elfo', 'fantasma', 'centauro', 'duende', 'gigante', 'trol']
+      - name: tipo_cliente
+        tests:
+          - accepted_values:
+              values: ['mugle', 'puro_sangre', 'semimagico', 'mestizo', 'mugle_magico']
+
+  - name: dim_libro
+    description: "Dimensión libro con titulo y autor."
+    columns:
+      - name: sk_libro
+        tests:
+          - unique
+          - not_null
+      - name: id_libro
+        tests:
+          - unique
+          - not_null
+      - name: titulo
+        tests:
+          - not_null
+
+  - name: dim_libreria
+    description: "Las librerías mágicas."
+    columns:
+      - name: sk_libreria
+        tests:
+          - unique
+          - not_null
+      - name: id_libreria
+        tests:
+          - unique
+          - not_null
+      - name: nombre_libreria
+        tests:
+          - not_null
+
+  - name: dim_fecha
+    description: "Dimensión fecha para análisis temporal."
+    columns:
+      - name: sk_fecha
+        tests:
+          - unique
+          - not_null
+      - name: id_fecha
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_editorial
+    description: "Dimensión editorial para contacto directo en reposición."
+    columns:
+      - name: sk_editorial
+        tests:
+          - unique
+          - not_null
+      - name: id_editorial
+        tests:
+          - unique
+          - not_null
+
+#TABLAS DE HECHO
+  - name: fct_venta
+    description: "Tabla de hechos de ventas incremental. Cubre 4 casos de uso."
+    columns:
+      - name: id_detalle
+        description: "PK natural de la línea de venta."
+        tests:
+          - unique
+          - not_null
+      - name: sk_cliente
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_cliente')
+              field: sk_cliente
+      - name: sk_libro
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_libro')
+              field: sk_libro
+      - name: sk_libreria
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_libreria')
+              field: sk_libreria
+      - name: sk_fecha
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_fecha')
+              field: sk_fecha
+      - name: total_venta
+        tests:
+          - not_null
+      - name: cantidad
+        tests:
+          - not_null
+
+  - name: fct_inventario
+    description: "Inventario con flag de reposición urgente y editorial de contacto."
+    columns:
+      - name: id_stock
+        tests:
+          - unique
+          - not_null
+      - name: sk_libro
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_libro')
+              field: sk_libro
+      - name: sk_editorial
+        tests:
+          - not_null:
+              config:
+                severity: warn
+          - relationships:
+              to: ref('dim_editorial')
+              field: sk_editorial
+              config:
+                severity: warn
+      - name: necesita_reposicion
+        tests:
+          - not_null
+          - accepted_values:
+              values: [true, false]

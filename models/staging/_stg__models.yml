@@ -1,0 +1,198 @@
+version: 2
+models:
+
+  - name: stg_cliente
+    description: "Tabla de clientes limpia desde Bronze"
+    columns:
+      - name: id_cliente
+        description: "Identificador único del cliente"
+        tests:
+          - unique
+          - not_null
+      - name: nombre
+        tests:
+          - not_null
+      - name: apellido
+        tests:
+          - not_null
+          # Email puede repetirse entre clientes distintos (misma familia/amigos)
+      # Lo que no puede ocurrir es que un mismo id_cliente tenga dos emails
+      - name: email
+        description: >
+          Email del cliente. Puede ser compartido entre distintos id_cliente.
+          Un mismo id_cliente nunca tendrá dos emails distintos.
+        tests:
+          - not_null
+      - name: ciudad
+      - name: tipo_cliente
+        tests:
+          - accepted_values:
+              values: ['mugle', 'puro_sangre', 'semimagico', 'mestizo', 'mugle_magico']
+      - name: especie
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['mugle', 'mago', 'elfo', 'fantasma', 'centauro', 'duende', 'gigante', 'trol']
+
+  - name: stg_editorial
+    description: "Tabla de editoriales limpia desde Bronze"
+    columns:
+      - name: id_editorial
+        tests:
+          - unique
+          - not_null
+      - name: nombre
+        tests:
+          - not_null
+      - name: pais
+        tests:
+          - not_null
+      - name: ciudad
+        tests:
+          - not_null
+      - name: tipo_editorial
+        tests:
+          - not_null
+      - name: especialidad
+      - name: email
+      - name: telefono
+      - name: contacto
+
+  - name: stg_fecha
+    description: "Tabla de fechas limpia desde Bronze"
+    columns:
+      - name: id_fecha
+        tests:
+          - unique
+          - not_null
+      - name: fecha_completa
+        tests:
+          - not_null
+      - name: anyo
+        tests:
+          - not_null
+      - name: mes
+        tests:
+          - not_null
+      - name: dia
+        tests:
+          - not_null
+
+  - name: stg_libreria
+    description: "Tabla de librerías limpia desde Bronze"
+    columns:
+      - name: id_libreria
+        tests:
+          - unique
+          - not_null
+      - name: nombre_libreria
+        tests:
+          - not_null
+      - name: ciudad
+        tests:
+          - not_null
+      - name: direccion
+      - name: telefono
+        description: "NULL si el valor original no es numérico"
+      - name: email
+      - name: fecha_apertura
+
+  - name: stg_libro
+    description: "Tabla de libros limpia desde Bronze"
+    columns:
+      - name: id_libro
+        tests:
+          - unique
+          - not_null
+      - name: id_editorial
+        tests:
+          - relationships:
+              to: ref('stg_editorial')
+              field: id_editorial
+              config:
+                severity: warn
+      - name: titulo
+        tests:
+          - not_null
+      - name: autor
+      - name: categoria
+        description: "Normalizada a minúsculas. sin_categoria si era null."
+      - name: precio
+        # not_null controlado por test singular
+
+  - name: stg_stock
+    description: "Tabla de stock limpia desde Bronze"
+    columns:
+      - name: id_stock
+        tests:
+          - unique
+          - not_null
+      - name: id_libro
+        tests:
+          - not_null
+          # relationships cubierto por test singular: tests/libros_sin_editorial.sql
+      - name: stock_inicial
+        tests:
+          - not_null
+      - name: unidades_vendidas
+        tests:
+          - not_null
+      - name: stock_actual
+        tests:
+          - not_null
+      - name: fecha_actualizacion
+      - name: necesita_reposicion
+        description: "TRUE si stock_actual < 5"
+        tests:
+          - not_null
+          - accepted_values:
+              values: [true, false]
+
+  - name: stg_venta
+    description: "Tabla de ventas limpia desde Bronze"
+    columns:
+      - name: id_detalle
+        tests:
+          - unique
+          - not_null
+      - name: id_venta
+        tests:
+          - not_null
+      - name: id_cliente
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_cliente')
+              field: id_cliente
+      - name: id_libro
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_libro')
+              field: id_libro
+              config:
+                severity: warn
+      - name: id_libreria
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_libreria')
+              field: id_libreria
+      - name: id_fecha
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_fecha')
+              field: id_fecha
+      - name: fecha
+        tests:
+          - not_null
+      - name: cantidad
+        tests:
+          - not_null
+      - name: precio_unitario
+        tests:
+          - not_null
+      - name: total_venta
+        tests:
+          - not_null
