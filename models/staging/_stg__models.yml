@@ -107,8 +107,8 @@ models:
       - name: id_editorial
         tests:
           - relationships:
-              to: ref('stg_editorial')
-              field: id_editorial
+              to: ref('stg_editorial')  #La tabla madre donde se busca
+              field: id_editorial     
               config:
                 severity: warn
       - name: titulo
@@ -142,7 +142,7 @@ models:
           - not_null
       - name: fecha_actualizacion
       - name: necesita_reposicion
-        description: "TRUE si stock_actual < 5"
+        description: "TRUE si stock_actual <= 10"
         tests:
           - not_null
           - accepted_values:

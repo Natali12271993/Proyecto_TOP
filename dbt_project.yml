@@ -21,11 +21,11 @@ models:
   Proyecto_top:
     staging:
       +materialized: view
-      +database: DEV_PROYECTO_SILVER
+      +database: "{{ env_var('DBT_DATABASE_SILVER', 'DEV_PROYECTO_SILVER') }}"
       +schema: STAGING
     marts:
       +materialized: table
-      +database: DEV_PROYECTO_GOLD
+      +database: "{{ env_var('DBT_DATABASE_GOLD', 'DEV_PROYECTO_GOLD') }}"
       +schema: CORE
 
 snapshots:

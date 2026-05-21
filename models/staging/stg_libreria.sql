@@ -8,9 +8,12 @@ renamed as (
         nombre_libreria,
         ciudad,
         direccion,
-        telefono,
+        CASE
+            WHEN REGEXP_LIKE(telefono::VARCHAR, '^[0-9]+$') THEN telefono::VARCHAR
+            ELSE NULL
+        END                             as telefono,
         email,
-        fecha_apertura
+        fecha_apertura::DATE            as fecha_apertura
     from source
 )
 
