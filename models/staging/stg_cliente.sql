@@ -17,7 +17,7 @@ renamed as (
     where id_cliente is not null
 ),
 
-deduplicado as (                 # Por email 
+deduplicado as (                 -- Por email 
     select *,
         ROW_NUMBER() OVER (PARTITION BY id_cliente ORDER BY id_cliente) as rn
     from renamed
