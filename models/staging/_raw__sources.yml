@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: libreria
     description: "Datos crudos de la libreria Bronze"
-    database: DEV_PROYECTO_BRONZE
+    database: "{{ env_var('DBT_DATABASE_BRONZE', 'DEV_PROYECTO_BRONZE') }}"
     schema: LIBRERIA
     tables:
       - name: clientes
