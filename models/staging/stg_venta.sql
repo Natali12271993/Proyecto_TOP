@@ -6,7 +6,7 @@ renamed as (
     select
         id_detalle,
         id_venta,
-        CASE
+        CASE                                            --130 - HC0130
             WHEN id_cliente LIKE 'HC%' THEN id_cliente
             WHEN id_cliente LIKE 'C%'
             THEN 'HC' || LPAD(REPLACE(id_cliente,'C',''), 4, '0')
