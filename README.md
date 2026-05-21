@@ -14,6 +14,7 @@ Pipeline de Data Engineering end-to-end construido con **dbt + Snowflake**.
 2. ¿Qué libros se venden más?  `fct_venta + dim_libro`
 3. ¿Qué especie de cliente compra más?  `fct_venta + dim_cliente`
 4. ¿En qué mes se vende más?  `fct_venta + dim_fecha`
+5. ¿Que libros necesitan la reposición urgente? `fct_inventario + dim_libro`
 
 ## Estructura del proyecto
 
